@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>simple chat</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style>
+    	#messages { list-style-type: none; margin: 0; padding: 0; }
+        #messages li { padding: 5px 10px; }
+        #messages li:nth-child(odd) { background: #eee; }
+        form input {width: 80%;}
+        form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+         .header-info img {
+            margin-top: 36px;
+            margin-right: 5px;
+        }
+        .header-info span {
+            margin-top: 40px;
+        }
+        
+        .angle-down {
+            top: 40px;
+        }
+        
+        .dropdown-menu {
+            top: 65px;
+        }
+         .examples-more a {
+        	color:rgb(102, 102, 102);
+        }
+        .examples-more a:hover {
+    	color: rgb(230, 80, 30);
+   	 	border-bottom: 1px solid rgb(230, 80, 30);
+   	 	}
+    </style>
+</head>
+
+<body>
+    <div id="container" style="width:960px">
+
+        <main id="main" style="text-align:center;padding-top:10.3%">
+            <div class="examples-more" style="text-align:left;"><a href="https://github.com/WildDogTeam/demo-js-simplechat" target="_blank">Fork me on Github</a></div>
+
+            <div style="font-size:36px;">Chating </div>
+            <div style="font-size:20px;color:#555">一起来！多人匿名聊天</div>
+
+            <div style="text-align:center;margin-top:50px">
+            	<div style="margin:0 auto; width:600px;">
+	            	<div style="margin:0 auto; height:400px; width:600px;border:1px solid rgb(229, 229, 229); overflow-y:scroll">
+	                	<ul id="messages" style="text-align:left;"></ul>
+	                </div>
+	                
+	                <div style="margin-top:10px;">
+	                	<form action="" onsubmit="return false;">
+<p>
+	      					<input id="m" autocomplete="off" style="width:388px;
+  height: 34px;
+  border-radius: 3px;
+  border: 1px solid rgb(204, 204, 204);
+  padding-left: 10px;" /> </p><p>
+      					<button style="border: 1px solid rgb(230, 80, 30);color:rgb(230, 80, 30);
+  border-radius: 3px;
+  text-align: center;
+  padding: 0;
+  height: 35px;
+  line-height: 35px;
+  font-size: 14px;width:159px;background-color:white">发送</button> <span style="margin-left:30px"><a id="clear-data"  style="color:rgb(204, 204, 204)" href="javascript:void(0)">清空聊天内容</a></span></p>
+	    				</form>
+	    				
+	    				 
+	                </div>
+            	</div>
+            </div>
+        </main>
+          </div>
+
+
+
+
+    <script src="https://cdn.wilddog.com/js/client/current/wilddog.js"></script>
+    <script src="https://cdn.wilddog.com/js/vendor/jquery-1.11.2.min.js"></script>
+
+    <script>
+      	var ref = new Wilddog("https://demochat.wilddogio.com/msg");
+      	
+      	function isNull(str) {
+            if (str == "")
+                return true;
+            var regu = "^[ ]+$";
+            var re = new RegExp(regu);
+            return re.test(str);
+        };
+        
+  	    $('form').submit(function() {
+  	    	var msg = $('#m').val() || '';
+  	    	if (isNull(msg)) {
+  	            return false;
+  	        }
+  	    	ref.push(msg);
+	 		$('#m').val('');
+	 		return false;
+ 		});
+  	    
+  	  ref.on('child_added', function (snapshot) {
+  	        var msg = snapshot.val();
+  	        $('#messages').append($('<li>').text(msg));
+  	      $("#messages").parent().scrollTop($("#messages").parent().height()); 
+  	    });
+  	    
+  	    $('#clear-data').click(function() {
+  	    	ref.remove();
+  	    	$('#messages').empty();
+  	    })
+    </script>
+</body>
+
+</html>
