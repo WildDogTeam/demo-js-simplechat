@@ -85,19 +85,9 @@
     <script>
       	var ref = new Wilddog("https://demochat.wilddogio.com/msg");
       	
-      	function isNull(str) {
-            if (str == "")
-                return true;
-            var regu = "^[ ]+$";
-            var re = new RegExp(regu);
-            return re.test(str);
-        };
-        
   	    $('form').submit(function() {
   	    	var msg = $('#m').val() || '';
-  	    	if (isNull(msg)) {
-  	            return false;
-  	        }
+  	    	if (msg == '') return;
   	    	ref.push(msg);
 	 		$('#m').val('');
 	 		return false;
